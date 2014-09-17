@@ -1,0 +1,45 @@
+Nicholas LaRosa
+CSE 20212, Lab 3 Coding Challenge
+
+Base Class: Shape
+
+Derived from Shape:
+	Two-dimensional
+	Three-dimensional
+
+	Derived from Two-dimensional:
+		Henagon
+		Digon
+		Triangle
+		Quadrilateral
+		Pentagon
+		Hexagon
+		Octagon
+		Nonagon
+		Decagon
+
+		Derived from Triangle:
+			Right
+			Equilateral
+			Isosceles
+			Scalene
+
+		Derived from Quadrilateral:
+			Parallelogram
+			Trapezoid
+			Kite
+
+			Derived from Parallelogram:
+				Rhombus
+				Square
+				Rectangle
+
+	Derived from Three-Dimensional:
+		Prism
+		Rectangular Solid
+		Cube
+		Pyramid
+		Cone
+		Sphere
+		Cylinder
+

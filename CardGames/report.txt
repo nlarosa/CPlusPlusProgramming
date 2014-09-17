@@ -1,0 +1,75 @@
+Nicholas LaRosa
+CSE 20212, Lab 4
+
+	This program allows the user to play a simple game of blackjack 
+against an automated dealer. To begin the game, the user is "dealt" two cards 
+and the dealer receives one card. True to blackjack rules, there are four cards
+that attribute a count of 10 (the 10, Jack, Queen, King), while in this version's
+case, the Ace card attributes a count of 11. After these intial dealings, the 
+current card counts are printed to the screen. At this point, the user is prompted
+if they want to "hit" or "stand". When choosing to "hit", the user is dealt 
+another card (with new count printed), and is again prompted. However, if the 
+user count exceeds 21 (called a "bust"), the game is over and the dealer is given 
+the win. When choosing to "stand", the user is done playing for the round, and 
+the dealer's turn begins. Thus, the user's turn ends when his/her count is greater 
+than 21, or  when they choose to "stand". However, the game only continues when 
+they have chosen to "stand". When the user's turn begins, they attempt to beat the 
+user by reaching a card count equal to the user's count (ties go to the dealer) 
+or by reaching a card count greater than that of the user (without exceeding 21). 
+The computer dealer in this game stands on all 17s, meaning that it continues to 
+deal itself cards until its total count is greater than or equal to 17. Ultimately, 
+the user  will win the round if his/her card count is greater than the dealer's 
+(without exceeding 21). At the end of the dealer's turn (when a winner has been 
+decided), the current win totals are printed to the screen (along with win 
+percentages), and the user is given the option to play another round or quit 
+the game. The win totals are retained from one round to another and begin at 
+zero when the program is executed.
+
+	From the programmer's perspective, this game is made possible through
+composition, where the BlackJack class has a CardDeck object as one of its
+data members, satisfying the "has-a" relationship of composition. The CardDeck
+class is made up of a "deque", which is a double-ended queue in template
+format. In other words, this deque allows us to dynamically store elements of
+any type (because it is a template) in an array-like structure. Within the
+CardDeck class, the deque can be shuffled, a function which is called during
+the game of blackjack when a new deck is constructed (after less than 15 cards
+are left in the current deck), or when a new round starts. Lastly, the
+CardDeck functionality allows the user to "pop" the first element (ie. the
+first card), simulating a card deck that decreases in size as cards are dealt. 
+The BlackJack class begins by constructing a "deck" of 52 "cards" (ie. a deque 
+of 52 elements). The BlackJack class subsequently provided functions to convert 
+from card number to blackjack count value (there must be 12 card values corres-
+ponding to a blackjack count of 10 (face cards) and four card values correspond-
+ing to a blackjack count of 11 (ace)). Additionally, there is functionality to 
+"deal" cards to both the user and the dealer, a function which adds the top (0-th
+indexed) deque "card" count to the respective player's count total. The
+"print" functions not only print the current player's count total, but they
+also print the round results if the game is won. A boolean true is returned if
+the game has ended at the point of calling the "print" functions. The
+remaining functions in the BlackJack class ask the user for his/her move (hit
+or stand), ask the user if he/she would like to play again, and print the
+current win standings to the screen. Lastly, the "playRound" function ties all
+these functions together to allow the user to play a single round of
+blackjack. However, if the user responds positively to playing another round,
+the "playRound" function calls itself, allowing another round to be played
+without any of the statistical values being erased.
+
+	The output of this program was verified through continual test runs
+through the blackjack game. First of all, any invalid input given by the user
+(either when prompted for move or prompted for new game) was successfully dis-
+regarded, and the prompt was sent to the user until valid input was given. The
+card values were successfully converted to their blackjack values, as told by
+the fact that no card counts were less than 2 or greater than 11 (and that 10
+was more common than any other count). Additionally, the current counts added
+correctly, the dealer chose to "hit" or "stand" at the appropraite times, and
+the correct result was printed to the screen. Although there were many trial
+runs of the game, it seems that the game runs without any error. However, it
+should be noted that the dynamic construction and deconstruction of card decks
+seems to introduce a segfault error that only appears intermittedly at the
+very end of the game (when the user chooses to not play anymore). I have
+included an older version of the blackjack game in the directory 
+"part3_blackjack_2", where a new deck is simulated by merely shuffling the 
+current deck (in case there are any problems with "part3_blackjack"). For
+some reason this segfault does not appear in the "coder_challenge" version of
+blackjack, even though all memory allocation is the same.
+

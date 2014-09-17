@@ -1,0 +1,73 @@
+Nicholas LaRosa
+CSE 20212, Lab 1
+January 29th, 2012
+
+	From the user's perspective, this program allows for the playing of a game of Connect 4.
+This game involves two players placing "discs" one after another into a board of six rows and seven 
+columns. If one player gets four of their "discs" in a row (horizontally, vertically, or diagonally),
+they win the game. During this version of the game, the user actually plays against a computer, who
+acts as Player 2. The board is displayed after every turn, and the user is not allowed to choose a 
+column that is full or that does not exist. Once one player is victorious, the user is asked if they 
+would like to play again, in which case the board is cleared and the game restarts. If the board 
+becomes filled with discs with no winner, the game is called a draw and is ended. Between each turn,
+there is a slight pause to allow the user to follow the computer's move.
+
+	From the programmer's perspective, this game is made up of two object
+interfaces and implementations. The first object is a column object, made up
+of an array of characters. The second object is a board object, made up of an
+array of columns (basically, a two dimensional array). From the column
+implementation, the programmer can add or remove a disc, find the current
+amount of discs within a column, and check to see if a column is full. Within
+this implementation, a get function for the "maxDiscs" constant is necessary
+in order to make sure discs are not added to a full column (i.e. "getMaxDiscs"
+is used within the "isFull" function). Additionally, the get function prevents
+any modification of the important constant of column length. From the board 
+implementation, the programmer can display the current board and initialize 
+the playing of a Connect 4 game.
+
+	Both the board and column implementations include a constructor that
+dynamically allocates enough space for the 6x7 Connect 4 board. That is, the
+column constructor dynamically allocates room for six characters within a
+column, and the board constructor dynamically allocates room for seven columns
+within a board. However, only the board implementation requires a
+deconstructor that deletes this dynamic memory. That is because if the board
+is deleted, it follows that all characters within each column character array
+are also deleted. This deconstructor is necessary, however, to ensure that our
+heap space is freed after its use has expired. We do not want heap memory to
+remain reserved after the program has ended, so we need this deconstructor to
+ensure that the heap will become free. This deconstructor is called implicitly
+after a while loop iteration in which a board is constructed. In other words,
+a board is constructed and a Connect 4 game is played until the game is over.
+At this point, the board is guaranteed to deconstruct, and will only
+re-construct if the user wishes to play another game.
+
+	The main engine of our Connect 4 game is made up of many "helper"
+functions, which are private functions within the board implementation. These
+functions first retrieve user input, validate that the user has selected a
+valid column, and then send this move to be checked. Additionally, the user
+can also end the game by entering -1 as their column of choice, which returns
+the ending boolean as 1. The move checking process involves recursively calling 
+directional functions (that only go on to call themselves to make sure we are 
+finding a straight line). Every possible direction is checked around a certain 
+move, with the checking function returning 1 if a Connect 4 was found. Otherwise, 
+the checking function returns 0. Thus, if the checking function returns 1, the
+user enters -1, or the board fills up, the game will end. However, as stated
+before, the user is prompted after an ended game to determine if a new game
+will be started. If so, a new board is constructed.
+
+	The computer player was created by replacing user 2's move with a
+automated move. The computer uses the checking "helper" functions at each
+possible position to determine if a Connect 4 move is possible on their turn.
+If not, the computer chooses a random column generated with the "rand()"
+function. Areas for improvement would be consideration of the user's move and
+a safeguard from the computer placing a disc in a full column.
+
+	In order to validate the output of this program, the Connect 4 game
+had to be played many times. Many errors were found initially, but they were
+worked on until a later game play would show these problems to be fixed. Other
+functions that were necessary included a "helper" function that checked to see
+if a move caused a Connect 4 somewhere else on the board (a Connect 4 that did
+not begin or end with the last placed disc). Overall, the game seems generally
+free of bugs and works successfully.
+
+ 

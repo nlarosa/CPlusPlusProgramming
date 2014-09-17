@@ -1,0 +1,52 @@
+Nicholas LaRosa
+CSE 20212, Lab 3
+
+	From the user's perspective, the main driver programs of parts 1, 2, and 3 
+all create derived class instances. For parts 2 and 3, the driver programs also include 
+a call to the print function, which displays to the screen the shipping type, the sender 
+and recipient information, the package weight, and the standard and total costs for the 
+shipping. For the two-day shipping, a flat fee is added to the standard shipping cost. 
+For the overnight shipping, an additional cost per ounce is added to the standard cost.
+
+	From the programmer's perspective, all three parts include base and derived
+classes. The base classes, whether they be BankAccount in part 1 or Package in parts 2
+and 3, contain data members that are shared across all derived classes. Additionally,
+the derived classes contain extra data members specific to that derived object. In parts
+2 and 3, the derived classes use calls to the Package base class functions in order to 
+print the sender and recipient information, which cannot be accessed directly by the
+derived classes. The derived classes add to the base print function by also displaying 
+the total cost (that factors in the extra fees associated). With the Package hierarchy,
+all classes are instantiated using non-default constructors. This is mainly because there
+cannot be default sender and recipient information for a package. 
+
+	In part 3, the base class Package was made abstract, while the derived classes
+TwoDayPackage and OvernightPackage were made concrete. This involved declaring the printLabel
+and calculateCost functions within the base class Package to be pure virtual functions. This
+means the two functions were declared virtual and set to zero in the base class. The same
+functions were virtual within the derived classes but were not set to zero, making them 
+concrete. Because the base class was abstract, it could not have been instantiated directly.
+Instead, the derived classes could be instantiated because they were concrete and they are
+the classes that explicitly declare the virtual functions.
+
+	During part 3, the Package hierarchy was modified to use composition instead of
+inheritance. It seems like inheritance is more natural precisely because the relationship 
+between Package and its derived OvernightPackage and TwoDayPackage can be considered an
+"is-a" relationship (corresponding to inheritance), and not a "has-a" relationship 
+(which corresponds to composition). In other words, a TwoDayPackage is a Package. This 
+inconsistency was felt when modifying the hierarchy to use composition, because it doesn't
+really make sense for an OvernightPackage to "have" a Package as one of its properties.
+
+	As mentioned in part 3, pure virtual functions are set to zero and make it so
+the containing class cannot be instantiated explicitly. On the other hand, virtual functions
+are within classes that can be created explicitly. This basically means that pure virtual 
+functions are those that are incomplete without further declaration within derived classes.
+In other words, you would not call a pure virtual function even if was possible because such
+functions by their nature should be incomplete without the partering of derived classes with
+the same functions also labeled "virtual" but not declared zero.
+
+	The output of this program was verified with a calculator that made sure the constant
+rates declared were followed by both the OvernightPackage and TwoDayPackage classes. In both cases,
+the total costs were correct and the appropriate fees were added to the standard cost. Additionally,
+in Part 1 the classes were instantiated successfully.
+
+

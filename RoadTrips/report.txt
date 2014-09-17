@@ -1,0 +1,95 @@
+Nicholas LaRosa
+CSE 20212, Lab7
+
+	From the user's perspective, the main driver program for the Trip
+class allows the user to input a data file and then, using this data,
+customize a road trip. The data file entered as a command-line argument
+contains a matrix of locations and the distances between each adjacent
+location. Upon runtime, this data is stored and the user is presented with a
+list of possible destinations, indexed from integer 1 onward. Until the user
+enters -1, he/she can enter the destination numbers for their custom road
+trip. Once -1 has been entered, the distances between each destination are
+outputted, in addition to the total distance (in miles) of this road trip. If
+the user attempts to enter a destination index that is invalid, they will be
+prompted for another destination index.
+
+	Internally, this program utilizes a class structure to house its
+functionality. The first member function of this class is the non-default
+constructor, which as mentioned initializes the internal data structure.
+Taking a filename as string input, this non-default constructor uses as
+ifstream to create a stream out of the file itself. From this stream,
+getline is used to grab one line of the file at a time. Each line is stored
+as a string and then converted into a stream using stringstream. This string
+stream is then delimited by tabs via another getline call. By using tab as a
+delimiter, each data member can be investigated (as long as the data file is
+formatted correctly with one tab in between each member). 
+
+	As each field is parsed as a string, this stored string is then added
+to a vector meant to hold the location titles. After being added to this
+vector, however, the field is tested via isdigit to see if in fact this field
+is an integer. If true, this field is converted to an integer via atoi and
+c_str, and the field is instead added to a temporary vector of integers.
+Additionally, a pop_back is called on the locations vector to make sure it
+does not contain our integer values. If the field is not an integer and the
+temporary vector of integers is filled with members, this means we have
+completed a line of integer values in our file and have reached another row of
+distances. At this point, the temporary array of distance integers is pushed
+back to our vector of vector of integers, meant to hold our distance integers.
+This 2D vector is thus populated one row at a time. After clearing the
+temporary array, the process is continued until the end of the file has been
+reached. At this point, the locations are stored in a vector of strings and
+the distances are stored in a 2D vector of integers.
+
+	The primary member function of the Trip class is the roadTrip
+function. Utilizing a private helper function getUserInt and the member
+function printLocations, this roadTrip function allows the user to customize
+their own road trip and have the trip distance calculated. The roadTrip
+function first calls the printLocations function, which works to iterate
+through the locations string vector and print each member. Additionally, the
+printLocations function pairs each location with an index that will then be
+chosen by the user. These indeces begin at one.
+
+	After printing the location options for the user, the prompt begins to
+ask the user for their road trip, one destination at a time. This is done via
+the getUserInt function, which calls itself recursively if the user does not
+enter an integer and eventually returns the integer given by the user. Within
+the roadTrip function, a while loop runs whenever the user enters an integer
+that is not -1. Within the while loop, any valid indeces given by the user are
+stored to an integer vector of destinations. If an index is invalid, the while
+loop is continued (ie. we skip to next iteration, calling getUserInt again).
+Once the user enters -1 to signify their road trip is complete, the distance
+between each pair of adjacent destinations is outputted by accessing the
+corresponding array elements of the 2D distances vector. This works because we
+know that the locations in the locations vector are in the same order as their
+respective distances in the distances 2D vector. Additionally, each of these
+distances between adjacent destinations is added to a running sum of the total
+distance. This total distance is the final output of this function. It should
+be noted that if no destination indeces are given, no distances will be
+outputted and the total road trip distance will be 0 miles.
+
+	This program was verified by inputting the sample ND distance input
+(from Piazza) and then testing different road trip configurations. The
+distances outputted by the program all corresponded with the distances
+manually checked from the input file, so I could verify that the program
+output was correct. Additionally, I created a test file named testInput, which
+was of the same format as the ND input. This file also successfully ran with
+the program, so the output could be verified as correct. The only problem with
+the current program is that the data file must ONLY contain one tab between
+each data field. Additionally, no blank lines can be inserted within the file.
+These inconsistencies can cause a segfault in the program. Although the
+program could thus be made more robust, it works if the data files are
+consistently formatted correctly.
+
+	Using the program, it was determined that the football team traveled a
+total of 14312 miles during their season to play at away games. In order to
+find a minimum distance if their schedule was flexible, it would be useful to
+utilize an algorithm that removes a location from a vector if it has been
+visited by the team. This locations vector can then be iterated through to
+find the minimum distance from the current location to one of the locations in
+this locations vector. The location that is shortest away will be traveled to,
+and this method will be continued until the team has visited all its away
+games. Of course, this algorithm assumes that the team does not have to return
+to ND after every game. Additionally, it might be useful to use a recursive
+method to check several steps forward in this algorithm to see if an
+alternative path will result in a shorter distance across multiple locations.
+

@@ -1,0 +1,53 @@
+Nicholas LaRosa
+CSE 20212, Lab 5
+
+	From the user's perspective, this program takes as input a positive integer, 
+which represents the number of suitors that Buttercup will be able to choose from. If 
+the user fails to provide a positive integer, they are prompted again. Once this value 
+is received, the computer calculates which suitor number Wesley should be in order to 
+win Buttercup's hand in marriage. This prediction is made using the fact that Buttercup
+removes every third suitor from contention (when the suitors are initially listed in
+increasing order), and is made possible by a circular doubly-linked list.
+
+	As mentioned, this program works by stepping through an internal circular 
+doubly-linked list and deleting every third element. Through the "cdl_list" class, 
+which contains the list functionality, an integer container of desired length is 
+initially constructed in the driver program to hold the remaining suitor numbers. With
+a while loop, the driver program then begins to remove one suitor at a time until the
+list of suitors is empty. These removed suitors are chosen by "iterating" through the
+list (using "next()" function)during every pass of the while loop, and incrementing an 
+integer count also at each pass. Once this integer count reaches three, the suitor at the 
+current list position is removed, that suitor's number is stored temporarily, and the count 
+is reset. Once the list is empty, the last suitor number stored (ie. the last suitor 
+deleted) is the suitor that Buttercup will choose. Thus, once the while loop is exited, 
+this stored value is printed to the screen as a message to Wesley. 
+
+	The output of this program was verified primarily by checking (by hand) that the 
+final suitor was correctly chosen for any initial number of suitors. This included using
+the example given in the lab document (with six suitors, Wesley needs to be number one to
+be chosen by Buttercup). Additionally, the functionality of the circular doubly-linked list
+was verified in part2, where nearly all the class functions were utilized in a driver program.
+According to the output of this driver program, the inner functionality of the class was
+correct. Lastly, the program successfully re-prompted the user when a negative number or 
+character was given for the number of suitors.
+
+	In this lab, data hiding played an important role in the functionality
+of the circular doubly-linked list. First of all, those using the member
+functions did not have to concern themselves with how data was stored in terms
+of memory allocation. Additionally, the user did not have to concern
+themselves with the current location in the list, but rather could seemlessly
+navigate through the list using only backwards and forwards iteration. This
+feature is attributed to the list's circular nature. Because the user does not
+need to concern themselves with these complications due to data hiding, I
+think that these features are advantageous for the user.
+	
+	Although the user need not concern themselves with this fact either,
+this circular doubly-linked list was basically an STL deque with added
+functionality. Nearly all member functions of cdl_list used the member
+functions of the templated STL deque class, increasing code reuse and
+simplifying the overall class size. The templated nature of the deque allowed
+the cdl_list to itself be templated, increasing functionality across all
+fundamental types. Overall, I think this was a great experience in templating
+and provided more experience with STL containers.
+
+

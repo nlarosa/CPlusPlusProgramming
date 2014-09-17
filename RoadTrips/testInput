@@ -1,0 +1,7 @@
+		Notre Dame	Berkeley	Stanford	MIT	Duke
+Notre Dame	0	2055	2104	1409	1323
+Berkeley	2055	0	105	2986	2768
+Stanford	2104	105	0	3095	2890
+MIT	1409	2986	3095	0	986
+Duke	1323	2768	2890	986	0
+

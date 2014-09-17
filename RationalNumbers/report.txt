@@ -1,0 +1,85 @@
+Nicholas LaRosa
+CSE 20212, Lab 2
+February 5th, 2013
+
+	From the user's perspective, this program asks for two rational
+numbers by separately asking for the numerator and denominator of each. If the
+user enters a character instead of an integer, they are prompted again for the
+same variable. Additionally, if the user enters a denominator of zero for any
+of the rational numbers, the respective denominator is changed to one and the
+user is notified. Once the user has entered the four values, the two numbers
+are displayed in fractional form and a list of performed mathematical
+functions and their results are displayed. In this program's case, the two 
+rational numbers are added, subtracted, multiplied, and divided. Additionally,
+the modulus operator is applied between the two rational numbers. If the user
+attempts to perform the modulus with a zero rational (as the divisor), an
+error is displayed and the value is treated as one for the operation. The more
+complex functions include the sum of the two numbers squared, the difference
+of the two numbers squared, the sum divided by the difference, and the sum
+modulus the difference. Lastly, the overloaded logical equality operator is
+used to compare the two numbers and display whether or not they are equal. For
+all the mathematical functions, the answers are displayed in fractional form.
+
+	From the programmer's perspective, the rational numbers are
+represented with their own class. This class includes integer data members
+for both the numerator and denominator of each instance. The default
+constructor for this class sets both the numerator and denominator to one. The
+non-default constructor, on the other hand, takes in two integer arguments:
+the first for the numerator and the second for the denominator. This
+non-default constructor makes sure that the denominator is not specified as
+zero, and if it is, changes the denominator to one and notifies the user.
+Additionally, the non-default constructor calls the helper function
+"findGCD()", which utilizes the Euclidean algorithm to find the greatest
+common factor and reduce both the numerator and denominator by this number.
+Once this has been done, the non-default constructor lastly checks that the
+denominator is not negative, and if it is, multiplies both the numerator and
+denominator by -1 (we want any negative sign to be on the numerator). 
+
+	The first operator to be overloaded was the output stream "<<".
+Because the output stream object is on the left of the operator when objects
+are sent, the overloaded operator must be called within the interface
+Rational.h file as a friend function. This allows the ostream class to have
+access to data within the Rational class; the overloaded operator is also
+globally defined within the implementation Rational.cpp class because the
+ostream class is not user-defined. Within the implementation Rational.cpp
+file, the ostream operator is overloaded so that a Rational object instance
+can be sent to the ostream and be displayed in fractional form ( numerator /
+denominator ). Finally, a pointer to the ostream object is returned by the 
+overloading function via the "this" pointer.
+
+	Mathematical functions were then overloaded for the Rational class.
+Because mathematical operators are called to the right of our Rational object
+instances, the overloading function can be defined as a member function within
+our interface and implementation. Within the implementation, the two sets of
+numerators and denominators were modified to achieve the desired mathematical
+outcomes. For the + and - operators, the rationals were multiplied by the
+other's denominators to achieve a common denominator, at which point the
+numerators were respectively added or subtracted. For the * operator, both the
+numerators and denominators were multiplied by eachother. For the / operator,
+the first rational was multiplied by the reciprocal of the second rational
+(ie. the numerator of the first was multiplied by the denominator of the
+second, and vice verse). For the % operator, common denominators were obtained
+and then the % operator was performed on the numerators. For all these
+mathematical functions, the final numerators and denominators were sent to the
+non-default constructor to make sure the fractions were reduced and that the
+denominators were non-zero. The newly constructed rationals were then returned
+by the functions, which all returned type Rational (class name). 
+
+	Lastly, one logical operator was overloaded: the equality "==". This
+overloading function was implemented as a member function because its
+overloaded form involves only the user-defined Rational class. This
+overloading function merely compared both the numerator and denominator; if
+they are both the same, the overloaded operator returns the integer 1 (true),
+otherwise 0 (false).
+
+	The output of this program was primarily verified through the use of a 
+TI-84 calculator (whose output was assumed to be correct). The mathematical
+functions were verified to be correct when the rational numbers were both
+different or the same. Additionally, the functions were verified to be correct
+when one or both of the rational numbers were zero. The logical == operator
+was verified when the rationals were either not equal or equal. The reducing
+operations of the non-default constructor were also verified by inputting
+non-reduced rationals and making sure that the final constructed rational was
+indeed reduced. Lastly, the ostream overload worked correctly by displaying
+the numerator and denominator separated by a / (fraction).
+

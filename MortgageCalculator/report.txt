@@ -1,0 +1,103 @@
+Nicholas LaRosa
+CSE 20212
+January 22nd, 2013
+Lab 0 - Prelab
+
+	This set of programs provides the interface, implementation, and class
+driver program to demonstrate a class in C++. The user can construct an
+instance of this Mortgage class by default, where the mortgage principal is
+set to $100,000, the yearly interest is set to 5%, and the monthly payment is
+set to $5,000. On the other hand, the user can also construct an instance in
+a non-default manner, where the user specifies the principal, interest rate,
+and monthly payment. If either the principal or payment are negative, or if
+the interest rate is not between 0 and 100, the invalid parameters are set to
+their default values and the user is notified of this. Once a Mortgage class
+has been instantiated, the user can call three different functions within
+their class driver program. The first of these is the "credit" function, where
+the user can subtract a dollar amount from the principal of a class instance.
+This is basically a one-time deposit on the specified mortgage. The user is
+notified if the credit is negative or the principal is paid off. Secondly, the
+user can call the "getPrincipal" function, which returns the current principal
+(balance) remaining on the specific mortgage class instance. Lastly, the user
+can call the "amortize" function on any of their mortgage instances, which
+displays a monthly chart of payments, the interest charged, and the balance
+remaining. Additionally, the user can see how much money the mortgage would
+cost them in total and how long the mortgage would take to be paid off.
+However, if the user's mortgage is not payable, i.e. the interest costs more
+than the monthly payment, the amortization table is not displayed and the
+error is relayed to the user.
+
+	From the programmer's perspective, this class contains both an
+interface and implementation. The interface is built within the mortgage.h
+file, which contains the class definitions. As specified, this class contains
+private data members and two private functions, "checkPayment" and
+"checkDigits". The private data members keep track of the mortgage principal,
+interest rate, and monthly payment figures. The private functions are not 
+accessible to the user but are necessary to help the user-accessible functions 
+work within the class implementation stage. The interface defines the three 
+functions "credit", "getPrincipal", and "amortize" as public so that they are 
+accessible by the user. Additionally, there are default and non-default
+constructors deemed as "public" to allow for user access.
+
+	Next comes the implementation stage, where the constructors and other
+three functions are defined (within mortgage.cpp). The first constructor is 
+default, meaning it takes no arguments and creates a mortgage class instance 
+with default values (which are set in this program using macros). The second 
+constructor is non-default, meaning it takes a user argument for a mortgage 
+principal, interest rate, and monthly payment. Within this non-default constructor, 
+user parameter input is checked to make sure the principal and payment are both
+non-negative and that the interest rate is between 0 and 100. If these
+conditions are not met, the invalid parameters are set to their default
+values and the user is notified of this change.
+	
+	The next function defined within the implementation file is the
+"credit" function, which takes a single parameter. This parameter specifies
+the amount of money the user wants to subtract from the current principal.
+Included in this function are checks for negative credit or already-paid-off
+mortgages, with the user notified in each case. Next comes the "getPrincipal"
+function, which returns the current principal amount as a double. Lastly comes
+the "amortize" function, which utilizes both the "checkPayment" and "checkDigits"
+private functions. The "checkPayment" function checks that the interest is
+payable by the specified monthly payment; if it is not, we know that the
+amortization table would go on forever without the mortgage being paid off, so
+we do not build the table in this case. The "checkDigits" function returns an
+integer of the number of decimal places a number needs, which helps when
+determining how precise the outputs should be in the table. The actual
+"amortize" function acts on a specified mortgage class instance and first
+checks that the "checkPayment" function returns true, meaning the table is not
+infinite and can be constructed. If the table is infinite, the user is
+notified and the function ends. In the former case, the function enters a
+while loop as long as the current mortgage is less than the amount at which
+the interest added to the balance equals the payment. In other words, the
+while loop continues until one payment is left. Within the while loop, the
+monthly interest on the current balance is calculated and added to the balance. 
+The monthly payment is then subtracted from this new balance, and the current
+balance remains. To end each iteration, the month number, payment, interest
+charged, and remaining balance is printed to standard out. Once the while loop
+is exited, the final month payment information is also printed. Lastly, the
+total amount of money paid and payment period are printed.
+
+	To validate the output of this Mortgage class, a class driver program
+was created within the "main.cpp" file. To first check that the non-default
+constructor performs correctly, a class instance was created for each kind of
+constructor error: negative principal or negative payment, and interest rate
+not between 0 and 100. Additionally, a mortgage was constructed with multiple
+invalid parameters to make sure that all values were set to default. In each
+case, the user was notified of their error and the invalid parameter was set
+to its default value (as defined by macros). The fact that the invalid
+parameters were changed was tested by crediting a formerly invalid mortgage.
+The credit amount was successfully subtracted from the default (changed)
+value. Additionally, another call of the "credit" function was used to
+validate that the default constructor worked as expected (ie. it set all the
+mortgage variables of that instance to their default values). The "credit"
+function was also tested by attempting to credit a mortgage with a negative
+dollar amount and by attempting to credit a mortgage more than its remaining
+balance. In each case, the error is relayed to the user and the mortgage is
+either not credited (when negative credit specified) or the mortgage's balance
+becomes zero (if more is credited than remains). Last but not least, the
+"amortize" function was tested by calling it on a mortgage instance. The table
+output was validated by hand to add up (in total paid and total months).
+Because most (if not all) error combinations were tested, it is believed that
+the output of these class programs are correct!
+
+

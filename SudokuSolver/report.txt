@@ -1,0 +1,90 @@
+Nicholas LaRosa
+CSE 20212, Lab 6
+
+	From the user's perspective, this program allows for a sudoku puzzle
+to be taken as input in a file. This puzzle file contains each puzzle member
+separated by a space, with members labeled zero being empty puzzle spaces. The
+user can input a puzzle file to this program by having the file be a command-
+line argument. Thus, the command line usage for this program is: "main [sudoku-file]".
+Once the user inputs this command line usage, the program outputs the original
+puzzle (zeros included) and then the completed puzzle. If the puzzle cannot be
+solved with the included algorithm, the "solved" puzzle may still contain some
+puzzle spaces of zero. 
+
+	From the programmer's perspective, this program was made possible via 
+a "Puzzle" class that contained as private data members a two dimensional vector
+to contain the puzzle solutions and a three dimensional vector to contain the 
+possible solutions for each position of the puzzle. Firstly, the string that
+corresponds to the sudoku file puzzle was passed to a Puzzle constructor that
+read the file and entered each element into its correct location in the puzzle
+two dimensional vector. On a related note, the main function allows the user to 
+enter the file name as a command line argument, but will not allow the puzzle
+to be populated if the user does not enter a file name or if they enter more 
+than one file name.
+
+	The first helper function created was "fillInitial()", which worked 
+to populate the three dimensional vector of solution possibilities. Because we
+only needed to worry about solving for board spaces of zero, possibilities of
+1-9 are generated only for those board spaces containing zeros. 
+
+	The next set of helper functions include "isolateHoriz()", "isolateVert()",
+and "IsolateSquare()". These functions all work to eliminate possibilites based
+on the board members contained in the same row, column, or minigrid. As expected,
+the "isolateHoriz()" eliminates possibilities for a solution based on the board
+members already contained in the same row. The "isolateVert()" function eliminates
+possibilities for a solution based on the board members contained in the same 
+column. Lastly, the "isolateSquare()" function eliminates possibilities for a 
+solution based on the board members contained in the same minigrid. 
+
+	The last set of helper functions include "solveInit()", "solveHoriz()",
+"solveVert()", and "solveSquare()". The "solveInit()" function works by filling
+in board solutions if a space has only one possible solution remaining. Thus, this
+function can be used by itself to solve easy puzzles. The "solveHoriz()" function
+fills in solutions if a board space has a unique possible solution in its row; ie.
+if no other zero spaces in its row have the same possibility. Similarly, the 
+"solveVert()" function fills in solutions if a board space has a unique possible
+solution in its column; ie. if no other zero spaces in its column have the same
+possibility. Lastly, the "solveSquare()" function fills in solutions if a board
+space has a unique possible solution in its minigrid; ie. if no other zero spaces
+in its minigrid have the same possibility. All these helper functions return a 
+true boolean if they are able to contribute a solution to the puzzle.
+
+	All these helper functions are combined in a way that allows the program
+to successfully solve all easy and medium puzzles, and even some hard puzzles
+(including the hard example given on Piazza). Within the "solve()" function, which
+is one of two public functions in the Puzzle class, the "fillInitial()" and all
+"isolate" functions are called in order to establish the initial possibilities
+for each board position. After printing the original board with the "printBoard()"
+function (which uses counters to print all boards in a 3 x 3 grid), a while loop
+begins that continues to run until no more solutions can be contributed by any of
+the "solve" helper functions. Between each attempt to add solutions (inside the 
+while loop), the possibilities are re-generated to make sure the "solve" functions
+are working with the most current solutions possibilities. Once no more solutions
+could be added, the final board was printed to the screen.
+
+	This program was verified by visually checking that the final puzzle was 
+free of number repetitions in each column, row, and minigrid. At intermediate steps,
+the possibilities generated at each location had to be printed to make sure that
+the correct possibilities were being eliminated from the possibilities three dimensional
+vector (ie. if these numbers were contained in the same row, column, or minigrid).
+Different puzzles were found on the internet and inputted into this program to check
+many possibilities. Because the program successfully solved many examples, we can 
+assume that the output is correct for easy and medium puzzles (and some hard).
+
+	In my opinion, returning boolean values from my solving helper functions was
+a great idea, especially because it prevent infinite loops. My other option would have
+been to continue attempting to solve until the puzzle was completely solved, but this
+would have caused infinite loops if my solver functions were unsuccessful, either due
+to bugs or the puzzle being too difficult. Additionally, my choice to actually erase
+elements from the possibilities three dimensional vector probably helped my program to
+run a little faster than if I had merely set invalid possibilities to zero. However,
+I did spend quite a long time trying to figure out why three of my "solve" functions,
+"solveHoriz()", "solveVert()", and "solveSquare()", were not sufficient to solve the 
+puzzle and why their functionality did not include the functionality of the "solveInit()"
+function. I late realized that single possibilities (those targeted by the "solveInit()")
+can be present as possibilities for other spaces. Thus, it did not work for me to attempt
+to solve the puzzle with merely the three unique-finding "solve" helper functions.
+Basically, this program solves the Sudoku puzzle in a way that a normal human would think
+about solving it (based on the rules of the puzzle), but because it is a computer program,
+this solver works much faster than any human.
+
